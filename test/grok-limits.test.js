@@ -621,6 +621,9 @@ describe("fetchGrokLimits", () => {
 
       let billingHits = 0;
       let refreshHits = 0;
+      // Recorded rather than asserted inside fetchImpl: fetchGrokPlanLabel
+      // swallows errors, so an in-callback assert could never fail the test.
+      let settingsAuthorization = null;
       const result = await fetchGrokLimits({
         home: tmp,
         env: { GROK_HOME: grokHome },
@@ -632,6 +635,16 @@ describe("fetchGrokLimits", () => {
               status: 200,
               async json() {
                 return { access_token: "after-refresh", expires_in: 3600 };
+              },
+            };
+          }
+          if (String(url).endsWith("/v1/settings")) {
+            settingsAuthorization = options.headers.Authorization;
+            return {
+              ok: true,
+              status: 200,
+              async json() {
+                return { subscription_tier_display: "SuperGrok" };
               },
             };
           }
@@ -662,7 +675,9 @@ describe("fetchGrokLimits", () => {
       });
 
       assert.equal(refreshHits, 1);
-      assert.equal(billingHits, 3); // Two billing attempts and one settings lookup.
+      assert.equal(billingHits, 2);
+      assert.equal(settingsAuthorization, "Bearer after-refresh");
+      assert.equal(result.plan_label, "SuperGrok");
       assert.equal(result.error, null);
       assert.equal(result.primary_window.used_percent, 12);
     } finally {
