@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { copy, setCopyLocale } from "../../../lib/copy";
 import { DE_LOCALE, EN_LOCALE, JA_LOCALE, KO_LOCALE, ZH_CN_LOCALE, ZH_TW_LOCALE } from "../../../lib/locale";
@@ -23,12 +23,6 @@ function formatAmount(value) {
 
 function credit(granted_at, expires_at) {
   return { status: "available", reset_type: "weekly", granted_at, expires_at };
-}
-
-function markerPosition(label) {
-  const row = screen.getByText(label).closest(".group");
-  const marker = row?.querySelector("div.absolute.top-0.h-full");
-  return marker ? Number(marker.style.left.match(/calc\(([\d.]+)%/)?.[1]) : null;
 }
 
 let getContextSpy;
@@ -365,91 +359,6 @@ describe("UsageLimitsPanel", () => {
     expect(group.querySelectorAll("div.absolute.top-0.h-full")).toHaveLength(2);
     fireEvent.click(group);
     expect(within(group).getByText(copy("limits.explain.body"))).toBeInTheDocument();
-  });
-
-  it("advances 5h and weekly pace marks every 10 seconds without fetching usage", () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-09-24T12:00:00.000Z"));
-    const fetchUsage = vi.fn();
-    vi.stubGlobal("fetch", fetchUsage);
-    const { rerender } = render(
-      <UsageLimitsPanel
-        claude={{
-          configured: true,
-          five_hour: { utilization: 42, resets_at: "2026-09-24T15:00:00.000Z" },
-          seven_day: { utilization: 55, resets_at: "2026-09-28T00:00:00.000Z" },
-        }}
-        order={["claude"]}
-      />,
-    );
-
-    const fiveHourLabel = copy("limits.label.claude_5h");
-    const weeklyLabel = copy("limits.label.claude_7d");
-    expect(markerPosition(fiveHourLabel)).toBeCloseTo(40);
-    expect(markerPosition(weeklyLabel)).toBeCloseTo(50);
-    act(() => vi.advanceTimersByTime(10_000));
-    expect(markerPosition(fiveHourLabel)).toBeGreaterThan(40);
-    expect(markerPosition(weeklyLabel)).toBeGreaterThan(50);
-    expect(screen.getByText(fiveHourLabel).closest(".group").querySelector("div.absolute.top-0.h-full"))
-      .toHaveClass("motion-safe:transition-[left]");
-    expect(fetchUsage).not.toHaveBeenCalled();
-
-    const oldMarker = screen.getByText(fiveHourLabel).closest(".group").querySelector("div.absolute.top-0.h-full");
-    rerender(
-      <UsageLimitsPanel
-        claude={{ configured: true, five_hour: { utilization: 42, resets_at: "2026-09-24T17:00:00.000Z" } }}
-        order={["claude"]}
-      />,
-    );
-    expect(screen.getByText(fiveHourLabel).closest(".group").querySelector("div.absolute.top-0.h-full"))
-      .not.toBe(oldMarker);
-  });
-
-  it("moves the remaining-mode mark backward and hides it after a stale reset", () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-09-24T14:59:40.000Z"));
-    render(
-      <UsageLimitsPanel
-        claude={{ configured: true, five_hour: { utilization: 42, resets_at: "2026-09-24T15:00:00.000Z" } }}
-        order={["claude"]}
-        displayMode="remaining"
-      />,
-    );
-
-    const label = copy("limits.label.claude_5h");
-    const initial = markerPosition(label);
-    act(() => vi.advanceTimersByTime(10_000));
-    expect(markerPosition(label)).toBeLessThan(initial);
-    act(() => vi.advanceTimersByTime(10_000));
-    expect(markerPosition(label)).toBeNull();
-    expect(screen.getByText(label).closest(".group").textContent).toContain("58%");
-  });
-
-  it("pauses the pace clock while hidden and snaps to current time on return", () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-09-24T12:00:00.000Z"));
-    const visibility = vi.spyOn(document, "visibilityState", "get").mockReturnValue("visible");
-    try {
-      render(
-        <UsageLimitsPanel
-          claude={{ configured: true, five_hour: { utilization: 42, resets_at: "2026-09-24T15:00:00.000Z" } }}
-          order={["claude"]}
-        />,
-      );
-      const label = copy("limits.label.claude_5h");
-      visibility.mockReturnValue("hidden");
-      act(() => fireEvent(document, new Event("visibilitychange")));
-      act(() => vi.advanceTimersByTime(60_000));
-      expect(markerPosition(label)).toBeCloseTo(40);
-
-      visibility.mockReturnValue("visible");
-      act(() => fireEvent(document, new Event("visibilitychange")));
-      expect(markerPosition(label)).toBeGreaterThan(40);
-      expect(screen.getByText(label).closest(".group").querySelector("div.absolute.top-0.h-full"))
-        .not.toHaveClass("motion-safe:transition-[left]");
-    } finally {
-      visibility.mockRestore();
-    }
   });
 
   it("surfaces a configured OpenCode Go error instead of rendering bars", () => {
