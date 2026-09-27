@@ -648,5 +648,16 @@
   "subscriptions.form.provider": "關聯工具",
   "subscriptions.form.provider_required": "請選擇關聯的工具",
   "subscriptions.form.provider_taken": "該工具已有訂閱，請編輯現有記錄",
-  "subscriptions.form.provider_taken_suffix": "（已有訂閱）"
+  "subscriptions.form.provider_taken_suffix": "（已有訂閱）",
+  "limits.appearance.title": "進度條外觀",
+  "limits.appearance.hint": "選擇材質與高度，套用至本裝置儀表板中的限額進度條。",
+  "limits.appearance.classic": "經典",
+  "limits.appearance.gradient": "柔和漸層",
+  "limits.appearance.glass": "玻璃",
+  "limits.appearance.metal": "金属",
+  "limits.appearance.neon": "霓虹",
+  "limits.appearance.segmented": "分段",
+  "limits.appearance.height": "進度條高度",
+  "limits.appearance.pixels": "{{value}} 像素",
+  "limits.appearance.reset": "恢復預設"
 }

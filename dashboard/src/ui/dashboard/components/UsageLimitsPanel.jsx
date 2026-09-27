@@ -1,3 +1,5 @@
+import { useLimitBarAppearance } from "../../../hooks/use-limit-bar-appearance.js";
+import "../../../components/limit-bar-appearance.css";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Clock as ClockIcon, Infinity as InfinityIcon } from "lucide-react";
 import { Card } from "../../components";
@@ -170,9 +172,9 @@ function LimitBar({ label, pct, reset, mode = LIMIT_DISPLAY_MODES.USED, pacePerc
       >
         {label}
       </span>
-      <div className="relative flex-1 bg-oai-gray-100 dark:bg-oai-gray-700/50 rounded-full h-1.5 overflow-hidden">
+      <div className="tt-limit-track">
         <div
-          className={`${barColor(displayPct, mode)} rounded-full h-full transition-[width] duration-500 ease-out`}
+          className={`${barColor(displayPct, mode)} tt-limit-fill rounded-full h-full transition-[width] duration-500 ease-out`}
           style={{ width: `${widthPct}%`, minWidth: displayPct > 0 ? "3px" : 0 }}
         />
         {paceX != null && (
@@ -180,11 +182,11 @@ function LimitBar({ label, pct, reset, mode = LIMIT_DISPLAY_MODES.USED, pacePerc
             {/* Notch: a slice of bare track that "cuts" the fill, so the mark reads
                 as a marker and stays visible even over a same-colored fill. */}
             <div
-              className={`absolute top-0 h-full bg-oai-gray-100 dark:bg-oai-gray-700/50 ${smoothPace ? "motion-safe:transition-[left] motion-safe:duration-[10000ms] motion-safe:ease-linear" : ""}`}
+              className={`tt-pace-marker absolute top-0 h-full bg-oai-gray-100 dark:bg-oai-gray-700/50 ${smoothPace ? "motion-safe:transition-[left] motion-safe:duration-[10000ms] motion-safe:ease-linear" : ""}`}
               style={{ left: `calc(${paceX}% - 3px)`, width: "6px" }}
             />
             <div
-              className={`absolute top-0 h-full ${paceOver ? "bg-red-500" : "bg-emerald-500"} ${smoothPace ? "motion-safe:transition-[left] motion-safe:duration-[10000ms] motion-safe:ease-linear" : ""}`}
+              className={`tt-pace-marker absolute top-0 h-full ${paceOver ? "bg-red-500" : "bg-emerald-500"} ${smoothPace ? "motion-safe:transition-[left] motion-safe:duration-[10000ms] motion-safe:ease-linear" : ""}`}
               style={{ left: `calc(${paceX}% - 1px)`, width: "2px" }}
             />
           </>
@@ -425,11 +427,11 @@ function SubscriptionBar({ subscription, now, mode = LIMIT_DISPLAY_MODES.USED })
       >
         {copy("subscriptions.inline.label")}
       </span>
-      <div className="relative flex-1 bg-oai-gray-100 dark:bg-oai-gray-700/50 rounded-full h-1.5 overflow-hidden">
+      <div className="tt-limit-track">
         <div
           className={`${
             expired ? "bg-red-500" : nearExpiry ? "bg-amber-500" : "bg-blue-500"
-          } rounded-full h-full block motion-safe:transition-[width] motion-safe:duration-500 ease-out motion-reduce:transition-none`}
+          } tt-limit-fill rounded-full h-full block motion-safe:transition-[width] motion-safe:duration-500 ease-out motion-reduce:transition-none`}
           style={{ width: `${renderWidth}%`, minWidth: renderWidth > 0 ? "3px" : 0 }}
         />
       </div>
@@ -537,9 +539,9 @@ function ResetBankRow({ row }) {
       >
         {row.label}
       </span>
-      <div className="relative flex-1 bg-oai-gray-100 dark:bg-oai-gray-700/50 rounded-full h-1.5 overflow-hidden">
+      <div className="tt-limit-track">
         <div
-          className="bg-oai-gray-400 dark:bg-oai-gray-500 rounded-full h-full transition-[width] duration-500 ease-out"
+          className="bg-oai-gray-400 dark:bg-oai-gray-500 tt-limit-fill rounded-full h-full transition-[width] duration-500 ease-out"
           style={{ width: `${widthPct}%`, minWidth: widthPct > 0 ? "3px" : 0 }}
         />
       </div>
@@ -1172,6 +1174,7 @@ function useWidestLabelWidth(containerRef) {
 }
 
 export function UsageLimitsPanel({ claude, codex, cursor, gemini, kimi, kiro, grok, antigravity, copilot, zcode, opencodeGo, commandCode, qoder, qoderCn, codingPlan, agentPlan, devin, order, visibility, displayMode, subscriptions = [], showSubscriptions = true }) {
+  const barAppearance = useLimitBarAppearance();
   const dataById = { claude, codex, cursor, gemini, kimi, kiro, grok, antigravity, copilot, zcode, opencodeGo, commandCode, qoder, qoderCn, codingPlan, agentPlan, devin };
   const containerRef = useRef(null);
   const labelWidth = useWidestLabelWidth(containerRef);
@@ -1260,7 +1263,8 @@ export function UsageLimitsPanel({ claude, codex, cursor, gemini, kimi, kiro, gr
         <div
           ref={containerRef}
           className="flex flex-col gap-3"
-          style={labelWidth > 0 ? { "--tt-limits-label-w": `${labelWidth}px` } : undefined}
+          data-bar-style={barAppearance.style}
+          style={{ "--tt-bar-height": `${barAppearance.height}px`, ...(labelWidth > 0 ? { "--tt-limits-label-w": `${labelWidth}px` } : {}) }}
         >
           <h3 className="text-sm font-medium text-oai-gray-500 dark:text-oai-gray-300 uppercase tracking-wide">
             {copy("limits.panel.title")}{copy("limits.panel.mode_separator")}{modeLabel}

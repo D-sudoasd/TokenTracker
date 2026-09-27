@@ -1,3 +1,4 @@
+import { LimitBarAppearance } from "../components/LimitBarAppearance.jsx";
 import React from "react";
 import { FlaskConical, Gauge, Globe, Monitor, Palette, Settings, UserRound } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -127,6 +128,7 @@ export function SettingsPage() {
       Icon: Gauge,
       content: (
         <div className="space-y-4">
+          <SectionCard title={copy("limits.appearance.title")}><LimitBarAppearance /></SectionCard>
           <SectionCard title={copy("settings.section.limits")}>
             <SettingsRow
               label={copy("limits.settings.display_mode_label")}

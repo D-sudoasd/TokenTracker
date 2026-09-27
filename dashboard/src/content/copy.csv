@@ -1654,3 +1654,14 @@ limits.devin.setupHint.subtitle,ui,LimitsPage,UsageLimitsPanel,devin_hint_subtit
 limits.devin.setupHint.step1,ui,LimitsPage,UsageLimitsPanel,devin_hint_step1,"Install the Devin CLI and sign in with the command below — TokenTracker picks it up with no restart.",,active
 limits.devin.setupHint.note,ui,LimitsPage,UsageLimitsPanel,devin_hint_note,"Refresh this page after signing in. TokenTracker sends the saved session token only to Devin's official quota endpoint.",,active
 limits.devin.setupHint.snippet_login,ui,LimitsPage,UsageLimitsPanel,devin_hint_snippet_login,"devin auth login",,active
+limits.appearance.title,limits,*,LimitBarAppearance,title,Progress bar appearance,,active
+limits.appearance.hint,limits,*,LimitBarAppearance,hint,Choose a finish and height. Applies to dashboard limit bars on this device.,,active
+limits.appearance.classic,limits,*,LimitBarAppearance,classic,Classic,,active
+limits.appearance.gradient,limits,*,LimitBarAppearance,gradient,Gradient,,active
+limits.appearance.glass,limits,*,LimitBarAppearance,glass,Glass,,active
+limits.appearance.metal,limits,*,LimitBarAppearance,metal,Metal,,active
+limits.appearance.neon,limits,*,LimitBarAppearance,neon,Neon,,active
+limits.appearance.segmented,limits,*,LimitBarAppearance,segmented,Segmented,,active
+limits.appearance.height,limits,*,LimitBarAppearance,height,Bar height,,active
+limits.appearance.pixels,limits,*,LimitBarAppearance,pixels,{{value}} px,,active
+limits.appearance.reset,limits,*,LimitBarAppearance,reset,Restore defaults,,active
