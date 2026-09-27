@@ -137,6 +137,38 @@ test("applyUndiciProxyIfNeeded sets a ProxyAgent dispatcher when proxy env exist
   assert.equal(captured.url, "http://127.0.0.1:7897");
 });
 
+test("native env proxy keeps its dispatcher on supported Node versions", () => {
+  for (const nodeVersion of ["22.21.0", "22.22.2", "24.5.0", "25.0.0"]) {
+    resetProxyApplyStateForTests();
+    let called = false;
+    const result = applyUndiciProxyIfNeeded({
+      env: { NODE_USE_ENV_PROXY: "1", HTTPS_PROXY: "http://127.0.0.1:7897" },
+      nodeVersion,
+      setGlobalDispatcher: () => { called = true; },
+      ProxyAgent: function () { called = true; },
+      Agent: function () {},
+    });
+    assert.equal(result, null);
+    assert.equal(called, false, `Node ${nodeVersion} should retain its native dispatcher`);
+  }
+});
+
+test("older Node versions still install the fallback proxy dispatcher", () => {
+  for (const nodeVersion of ["20.19.0", "22.20.0", "24.4.0"]) {
+    resetProxyApplyStateForTests();
+    let installed = null;
+    const result = applyUndiciProxyIfNeeded({
+      env: { NODE_USE_ENV_PROXY: "1", HTTPS_PROXY: "http://127.0.0.1:7897" },
+      nodeVersion,
+      setGlobalDispatcher: (dispatcher) => { installed = dispatcher; },
+      ProxyAgent: function (url) { this.url = url; },
+      Agent: function () {},
+    });
+    assert.deepEqual(result, { ok: true, proxyUrl: "http://127.0.0.1:7897" });
+    assert.equal(installed.url, "http://127.0.0.1:7897");
+  }
+});
+
 test("applyUndiciProxyIfNeeded is a no-op when no env and no system proxy exist", () => {
   resetProxyApplyStateForTests();
   let called = false;

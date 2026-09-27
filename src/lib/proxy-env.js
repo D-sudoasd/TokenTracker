@@ -364,11 +364,14 @@ async function runProxyConnectivityTest({
 }
 
 // Node's built-in NODE_USE_ENV_PROXY support only landed in v22.21 / v24.5.
-// For older runtimes (including the v22.14 we historically embedded in the
-// macOS app, and the v22.16 a community user hit on Discussion #68) the env
-// var is silently ignored and fetch() bypasses the proxy. Setting an undici
-// ProxyAgent dispatcher at startup gives us proxy support on every Node ≥ 18
-// regardless of the env-proxy flag.
+// Keep the explicit dispatcher for older runtimes and manual proxy mode. On
+// newer Node, the native env proxy respects the runtime's proxy handling;
+// replacing it with undici's ProxyAgent can change responses from providers.
+function hasNativeEnvProxy(nodeVersion) {
+  const [major, minor] = String(nodeVersion || "").split(".").map(Number);
+  return (major === 22 && minor >= 21) || (major === 24 && minor >= 5) || major >= 25;
+}
+
 function swapOwnedDispatcher(setter, next) {
   setter(next);
   const previous = ownedDispatcher;
@@ -410,8 +413,21 @@ function applyUndiciProxyIfNeeded({
   warn,
   platform = process.platform,
   commandRunner = cp.spawnSync,
+  nodeVersion = process.versions.node,
 } = {}) {
   const normalized = normalizeProxyConfig(proxyConfig);
+  // Loading undici can itself replace Node's native dispatcher, so return
+  // before even requiring it when Node already handles the env proxy.
+  if (
+    normalized.mode === "system" &&
+    env.NODE_USE_ENV_PROXY === "1" &&
+    hasNativeEnvProxy(nodeVersion) &&
+    !ownedDispatcher &&
+    !isDeclaredManual(proxyConfig)
+  ) {
+    lastManualApplyError = null;
+    return null;
+  }
   const parts = loadUndiciParts({ setGlobalDispatcher, ProxyAgent, Agent });
 
   if (isDeclaredManual(proxyConfig) && normalized.mode !== "manual") {
