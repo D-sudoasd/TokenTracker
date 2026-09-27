@@ -731,6 +731,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
         _dashboard.PushNativeSettings(new
         {
             platform = "windows",
+            limitBarAppearance = LimitBarAppearanceStore.Read(),
             autoUpdateEnabled = _updateChecker.AutoUpdateEnabled,
             launchAtLogin = LaunchAtStartup.IsEnabled,
             // Startup can still be toggled from the tray menu; keep the
@@ -753,6 +754,9 @@ internal sealed class TrayApplicationContext : ApplicationContext
     {
         switch (key)
         {
+            case "limitBarAppearance" when value is string appearance:
+                LimitBarAppearanceStore.Save(appearance);
+                break;
             case "autoUpdateEnabled" when value is bool enabled:
                 _updateChecker.AutoUpdateEnabled = enabled;
                 break;

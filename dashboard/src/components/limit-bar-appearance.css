@@ -8,29 +8,29 @@
   isolation: isolate;
 }
 .dark .tt-limit-track { background-color: #303035; }
-.tt-limit-fill { height: 100%; border-radius: inherit; position: relative; }
+.tt-limit-fill { height: 100%; border-radius: inherit; position: relative; background-image: var(--tt-texture, linear-gradient(transparent, transparent)), var(--tt-paint, linear-gradient(transparent, transparent)); background-size: 100% 100%, var(--tt-gradient-size, 100%) 100%; }
 [data-bar-style="gradient"] .tt-limit-fill {
-  background-image: linear-gradient(100deg, #0003, #fff3);
+  --tt-texture: linear-gradient(100deg, #0003, #fff3);
 }
 [data-bar-style="glass"] .tt-limit-track,
 [data-bar-style="metal"] .tt-limit-track {
   box-shadow: inset 0 1px 3px #0007, 0 1px 0 #ffffff30;
 }
 [data-bar-style="glass"] .tt-limit-fill {
-  background-image: linear-gradient(180deg, #fffc 0%, #ffffff35 42%, #0002 49%, #0003 55%, #fff2 100%);
+  --tt-texture: linear-gradient(180deg, #fffc 0%, #ffffff35 42%, #0002 49%, #0003 55%, #fff2 100%);
   box-shadow: inset 0 0 0 1px #0003;
 }
 [data-bar-style="metal"] .tt-limit-fill {
-  background-image: linear-gradient(180deg, #0006, #fff9 20%, #fff2 46%, #0005 51%, #fff4 85%, #0004);
+  --tt-texture: linear-gradient(180deg, #0006, #fff9 20%, #fff2 46%, #0005 51%, #fff4 85%, #0004);
   box-shadow: inset 0 0 0 1px #0005;
 }
 [data-bar-style="neon"] .tt-limit-track { box-shadow: inset 0 0 0 1px #80808050; }
 [data-bar-style="neon"] .tt-limit-fill {
-  background-image: linear-gradient(180deg, #fff2, #ffffff70 48%, #fff1);
+  --tt-texture: linear-gradient(180deg, #fff2, #ffffff70 48%, #fff1);
   box-shadow: 0 0 8px 1px #ffffff50, inset 0 0 0 1px #ffffff60;
 }
 [data-bar-style="segmented"] .tt-limit-fill {
-  background-image: linear-gradient(180deg, #fff5, transparent 45%, #0003);
+  --tt-texture: linear-gradient(180deg, #fff5, transparent 45%, #0003);
 }
 [data-bar-style="segmented"] .tt-limit-track::after {
   content: "";
@@ -42,7 +42,7 @@
 .tt-limit-track > .tt-pace-marker { z-index: 2; }
 
 /* Fantasy frames are overlays: they never inset or rescale the quota fill. */
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) {
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) {
   --tt-frame-light: #ffe7a3;
   --tt-frame-mid: #987243;
   --tt-frame-dark: #382514;
@@ -53,14 +53,14 @@
 [data-bar-style="frost"] { --tt-frame-light: #e4fcff; --tt-frame-mid: #78b7cf; --tt-frame-dark: #213e59; --tt-aura: #8ddfff; }
 [data-bar-style="ember"] { --tt-frame-light: #ffd49c; --tt-frame-mid: #a26b45; --tt-frame-dark: #38231c; --tt-aura: #ff7438; }
 .tt-bar-swatch { padding: 10px 8px; }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-track {
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-track {
   overflow: visible;
   border-radius: 4px;
   background: linear-gradient(180deg, #080a10, #22242d 48%, #101218);
   box-shadow: 0 0 0 1px #090b10, 0 0 0 3px var(--tt-frame-mid), 0 0 0 4px var(--tt-frame-dark), 0 2px 8px #0005;
   margin-block: 5px;
 }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-track::before {
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-track::before {
   content: "";
   pointer-events: none;
   position: absolute;
@@ -71,7 +71,7 @@
   border-bottom: 1px solid var(--tt-frame-dark);
   box-shadow: inset 0 1px 0 #ffffff25, inset 0 -1px 0 #0009;
 }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-track::after {
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-track::after {
   content: "";
   position: absolute;
   z-index: 3;
@@ -79,13 +79,13 @@
   inset: -6px -3px;
   background: var(--tt-endcap) left center / 10px 100% no-repeat, var(--tt-endcap) right center / 10px 100% no-repeat;
 }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-fill {
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-fill {
   border-radius: 3px;
   /* Inset highlights and texture leave the status background color intact. */
-  background-image: linear-gradient(180deg, #fff7, #fff1 27%, #0002 52%, #0006 85%, #fff2);
+  --tt-texture: linear-gradient(180deg, #fff7, #fff1 27%, #0002 52%, #0006 85%, #fff2);
   box-shadow: inset 0 1px 0 #ffffff90, inset 0 -1px 0 #0009;
 }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-fill::before {
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-fill::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -93,7 +93,7 @@
   pointer-events: none;
   background: repeating-linear-gradient(115deg, transparent 0 8px, #fff1 9px, transparent 10px 19px), linear-gradient(0deg, transparent 44%, #ffffff40 48%, transparent 55%);
 }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-fill::after {
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-fill::after {
   content: "";
   position: absolute;
   pointer-events: none;
@@ -129,4 +129,52 @@
 
 @media (prefers-reduced-motion: reduce) {
   .tt-limit-track > div { transition: none !important; }
+}
+
+/* All ornaments stay inside reserved row space and never intercept dragging. */
+.tt-limit-track { min-width: 0; }
+.tt-limit-fill::before, .tt-limit-fill::after { pointer-events: none; }
+[data-quota-state="safe"] { --tt-state: var(--tt-safe, #10b981); --tt-state-end: var(--tt-safeEnd, #6ee7b7); }
+[data-quota-state="warning"] { --tt-state: var(--tt-warning, #f59e0b); --tt-state-end: var(--tt-warningEnd, #fde68a); }
+[data-quota-state="danger"] { --tt-state: var(--tt-danger, #ef4444); --tt-state-end: var(--tt-dangerEnd, #fca5a5); }
+.tt-limit-fill[data-quota-state] { background-color: var(--tt-state); }
+[data-bar-colors="status-gradient"] .tt-limit-fill[data-quota-state] {
+  --tt-paint: linear-gradient(90deg, var(--tt-state), var(--tt-state-end));
+  background-size: 100% 100%, 100% 100%;
+}
+[data-bar-colors="spectrum"] .tt-limit-fill[data-quota-state] {
+  --tt-paint: linear-gradient(90deg, var(--tt-safe) 0%, var(--tt-warning) 70%, var(--tt-danger) 90%);
+}
+[data-bar-colors="spectrum"][data-bar-direction="remaining"] .tt-limit-fill[data-quota-state] {
+  --tt-paint: linear-gradient(90deg, var(--tt-danger) 10%, var(--tt-warning) 30%, var(--tt-safe) 100%);
+}
+[data-bar-style="nature"] { --tt-frame-light: #d7e9a0; --tt-frame-mid: #69834b; --tt-frame-dark: #273821; --tt-aura: #b9ff85; }
+[data-bar-style="nature"] .tt-limit-fill::before {
+  background: repeating-radial-gradient(ellipse at 0 100%, transparent 0 6px, #d5ffba50 7px 8px, transparent 9px 15px);
+}
+[data-bar-style="nature"] .tt-limit-track::after { filter: hue-rotate(45deg); }
+[data-bar-style="shadow"] { --tt-frame-light: #c0a4e5; --tt-frame-mid: #615276; --tt-frame-dark: #221b30; --tt-aura: #c08aff; }
+[data-bar-style="shadow"] .tt-limit-fill::before {
+  background: radial-gradient(ellipse at 25% 100%, #0009, transparent 55%), repeating-linear-gradient(160deg, transparent 0 15px, #d4b2ff50 18px, transparent 25px 36px);
+}
+[data-bar-style="shadow"] .tt-limit-track::after { filter: hue-rotate(215deg) saturate(.4); }
+[data-bar-style="storm"] { --tt-frame-light: #e5f8ff; --tt-frame-mid: #668aab; --tt-frame-dark: #273549; --tt-aura: #a9e5ff; }
+[data-bar-style="storm"] .tt-limit-fill::before {
+  background: repeating-linear-gradient(120deg, transparent 0 20px, #ffffffb0 21px, transparent 23px 40px), repeating-linear-gradient(60deg, transparent 0 31px, #fff6 33px, transparent 35px 61px);
+}
+[data-bar-style="storm"] .tt-limit-track::after { filter: saturate(0) brightness(1.3); }
+[data-bar-style="blood"] { --tt-frame-light: #e5bdc1; --tt-frame-mid: #8b545f; --tt-frame-dark: #301c25; --tt-aura: #ff6d8c; }
+[data-bar-style="blood"] .tt-limit-fill::before {
+  background: repeating-radial-gradient(ellipse at 30% -60%, transparent 0 7px, #0005 8px, transparent 10px 17px), linear-gradient(0deg, #0006, transparent 60%);
+}
+[data-bar-style="blood"] .tt-limit-track::after { filter: hue-rotate(300deg) saturate(.6); }
+[data-bar-style="runic"] { --tt-frame-light: #cdd7e1; --tt-frame-mid: #788391; --tt-frame-dark: #2e3540; --tt-aura: #89bfff; }
+[data-bar-style="runic"] .tt-limit-fill::before {
+  background: repeating-linear-gradient(90deg, transparent 0 17px, #dceeff70 18px 19px, transparent 20px 28px), repeating-linear-gradient(45deg, transparent 0 8px, #fff3 9px, transparent 10px 20px);
+}
+[data-bar-style="runic"] .tt-limit-track { border-radius: 0; }
+[data-bar-style="runic"] .tt-limit-track::after { filter: saturate(.1); }
+[data-bar-style="dragon"] { --tt-frame-light: #f4d6a0; --tt-frame-mid: #99744a; --tt-frame-dark: #332a23; --tt-aura: #ffd49b; }
+[data-bar-style="dragon"] .tt-limit-fill::before {
+  background: radial-gradient(ellipse at 50% 0, transparent 55%, #0006 59%, #fff4 64%, transparent 69%) 0 0 / 18px 12px;
 }

@@ -42,6 +42,18 @@ afterEach(() => {
 });
 
 describe("UsageLimitsPanel", () => {
+  it.each([0, 69, 70, 89, 90, 100])("keeps status thresholds at %s used in both display modes", (used) => {
+    const props = { claude: { configured: true, five_hour: { utilization: used } }, order: ["claude"] };
+    const { container, rerender } = render(createElement(UsageLimitsPanel, { ...props, displayMode: "used" }));
+    const expected = used >= 90 ? "danger" : used >= 70 ? "warning" : "safe";
+    expect(container.querySelector("[data-quota-state]").dataset.quotaState).toBe(expected);
+    rerender(createElement(UsageLimitsPanel, { ...props, displayMode: "remaining" }));
+    const fill = container.querySelector("[data-quota-state]");
+    expect(fill.dataset.quotaState).toBe(expected);
+    expect(fill.style.width).toBe(`${100 - used}%`);
+    expect(fill.style.getPropertyValue("--tt-gradient-size")).not.toMatch(/Infinity|NaN/);
+  });
+
   afterEach(() => {
     setCopyLocale(EN_LOCALE);
   });

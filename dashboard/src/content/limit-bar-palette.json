@@ -1,0 +1,8 @@
+{
+  "safe": "#10b981",
+  "warning": "#f59e0b",
+  "danger": "#ef4444",
+  "safeEnd": "#6ee7b7",
+  "warningEnd": "#fde68a",
+  "dangerEnd": "#fca5a5"
+}
