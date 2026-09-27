@@ -13,6 +13,7 @@ namespace TokenTrackerWin;
 internal static class SingleInstance
 {
     private const string PipeName = "TokenTracker.Windows.Tray.DeepLink";
+    internal const string ShowDashboardMessage = "show-dashboard";
 
     /// <summary>
     /// Try to hand <paramref name="payload"/> to an already-running instance. Returns

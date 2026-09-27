@@ -437,6 +437,8 @@ internal sealed class TrayApplicationContext : ApplicationContext
         _dashboard!.ShowDashboard();
     }
 
+    public void ActivateDashboard() => _uiDispatcher.BeginInvoke(new Action(OpenDashboard));
+
     private void ToggleDashboard()
     {
         EnsureDashboard();
@@ -795,6 +797,11 @@ internal sealed class TrayApplicationContext : ApplicationContext
     /// </summary>
     public void HandleDeepLink(string url)
     {
+        if (url == SingleInstance.ShowDashboardMessage)
+        {
+            ActivateDashboard();
+            return;
+        }
         DiagLog($"HandleDeepLink url={url}");
         string? code = null;
         try
