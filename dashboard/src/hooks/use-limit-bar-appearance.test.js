@@ -1,11 +1,46 @@
 import { act, renderHook } from "@testing-library/react";
-import { beforeEach, expect, it } from "vitest";
-import { normalizeBarAppearance, useLimitBarAppearance } from "./use-limit-bar-appearance.js";
+import { beforeEach, expect, it, vi } from "vitest";
+import { DEFAULT_PALETTE, normalizeBarAppearance, useLimitBarAppearance } from "./use-limit-bar-appearance.js";
+import { isNativeWindowsApp, setNativeSetting } from "../lib/native-bridge.js";
 
-beforeEach(() => window.localStorage.clear());
+vi.mock("../lib/native-bridge.js", async (importOriginal) => ({
+  ...await importOriginal(),
+  isNativeWindowsApp: vi.fn(() => false),
+  requestNativeSettings: vi.fn(),
+  setNativeSetting: vi.fn(),
+}));
+
+beforeEach(() => { window.localStorage.clear(); vi.clearAllMocks(); isNativeWindowsApp.mockReturnValue(false); });
+
+it("migrates old settings and rejects invalid colors without losing valid colors", () => {
+  expect(normalizeBarAppearance({ style: "gilded", height: 20 })).toMatchObject({ colorMode: "solid", palette: DEFAULT_PALETTE });
+  expect(normalizeBarAppearance({ palette: { safe: "url(unsafe)", danger: DEFAULT_PALETTE.warning } }).palette)
+    .toEqual({ ...DEFAULT_PALETTE, danger: DEFAULT_PALETTE.warning });
+});
+
+it("keeps rapid successive changes rather than reading a stale render", () => {
+  const hook = renderHook(useLimitBarAppearance);
+  act(() => { hook.result.current.update({ style: "storm" }); hook.result.current.update({ colorMode: "spectrum" }); });
+  expect(hook.result.current).toMatchObject({ style: "storm", colorMode: "spectrum" });
+});
+
+it("restores Windows settings on a new origin and ignores late snapshots after editing", () => {
+  isNativeWindowsApp.mockReturnValue(true);
+  const panel = renderHook(useLimitBarAppearance);
+  const controls = renderHook(useLimitBarAppearance);
+  const nativeSnapshot = () => window.dispatchEvent(new CustomEvent("native:settings", { detail: {
+    limitBarAppearance: JSON.stringify({ style: "dragon", height: 24, colorMode: "spectrum" }),
+  } }));
+  act(nativeSnapshot);
+  expect(panel.result.current).toMatchObject({ style: "dragon", height: 24, colorMode: "spectrum" });
+  act(() => controls.result.current.update({ style: "nature" }));
+  act(nativeSnapshot);
+  expect(panel.result.current.style).toBe("nature");
+  expect(setNativeSetting).toHaveBeenCalledWith("limitBarAppearance", expect.stringContaining('"style":"nature"'));
+});
 
 it("bounds invalid persisted values and recovers from malformed storage", () => {
-  expect(normalizeBarAppearance({ style: "unknown", height: Infinity })).toEqual({ style: "classic", height: 12 });
+  expect(normalizeBarAppearance({ style: "unknown", height: Infinity })).toMatchObject({ style: "classic", height: 12 });
   expect(normalizeBarAppearance({ height: 99 }).height).toBe(24);
   expect(normalizeBarAppearance({ height: -1 }).height).toBe(6);
   window.localStorage.setItem("tt.limits.barAppearance", "broken");

@@ -1669,3 +1669,18 @@ limits.appearance.gilded,limits,*,LimitBarAppearance,gilded,Gilded,,active
 limits.appearance.arcane,limits,*,LimitBarAppearance,arcane,Arcane,,active
 limits.appearance.frost,limits,*,LimitBarAppearance,frost,Frost,,active
 limits.appearance.ember,limits,*,LimitBarAppearance,ember,Ember,,active
+limits.appearance.nature,limits,*,LimitBarAppearance,nature,Nature,,active
+limits.appearance.shadow,limits,*,LimitBarAppearance,shadow,Shadow,,active
+limits.appearance.storm,limits,*,LimitBarAppearance,storm,Storm,,active
+limits.appearance.blood,limits,*,LimitBarAppearance,blood,Blood,,active
+limits.appearance.runic,limits,*,LimitBarAppearance,runic,Runic,,active
+limits.appearance.dragon,limits,*,LimitBarAppearance,dragon,Dragon scales,,active
+limits.appearance.colorMode,limits,*,LimitBarAppearance,colorMode,Color mode,,active
+limits.appearance.solid,limits,*,LimitBarAppearance,solid,Status colors,,active
+limits.appearance.status-gradient,limits,*,LimitBarAppearance,status-gradient,Two-color status gradients,,active
+limits.appearance.spectrum,limits,*,LimitBarAppearance,spectrum,Continuous three-color gradient,,active
+limits.appearance.safe,limits,*,LimitBarAppearance,safe,Used <70%,,active
+limits.appearance.warning,limits,*,LimitBarAppearance,warning,Used 70–90%,,active
+limits.appearance.danger,limits,*,LimitBarAppearance,danger,Used ≥90%,,active
+limits.appearance.endColor,limits,*,LimitBarAppearance,endColor,Gradient end,,active
+limits.appearance.colorHint,limits,*,LimitBarAppearance,colorHint,Colors follow used quota. Continuous gradients use the full 0–100% scale; remaining mode reverses it.,,active

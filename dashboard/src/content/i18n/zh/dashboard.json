@@ -604,5 +604,20 @@
   "limits.appearance.gilded": "鎏金",
   "limits.appearance.arcane": "奥术",
   "limits.appearance.frost": "冰霜",
-  "limits.appearance.ember": "熔火"
+  "limits.appearance.ember": "熔火",
+  "limits.appearance.nature": "自然",
+  "limits.appearance.shadow": "暗影",
+  "limits.appearance.storm": "雷霆",
+  "limits.appearance.blood": "鲜血",
+  "limits.appearance.runic": "符文",
+  "limits.appearance.dragon": "龙鳞",
+  "limits.appearance.colorMode": "配色方式",
+  "limits.appearance.solid": "状态纯色",
+  "limits.appearance.status-gradient": "状态双色渐变",
+  "limits.appearance.spectrum": "连续三色渐变",
+  "limits.appearance.safe": "已用 <70%",
+  "limits.appearance.warning": "已用 70–90%",
+  "limits.appearance.danger": "已用 ≥90%",
+  "limits.appearance.endColor": "渐变终点",
+  "limits.appearance.colorHint": "颜色按已用额度判断。连续渐变以完整的 0–100% 为尺度，剩余模式反向显示。"
 }

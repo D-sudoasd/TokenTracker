@@ -1,4 +1,4 @@
-import { useLimitBarAppearance } from "../../../hooks/use-limit-bar-appearance.js";
+import { useLimitBarAppearance, barAppearanceVariables } from "../../../hooks/use-limit-bar-appearance.js";
 import "../../../components/limit-bar-appearance.css";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Clock as ClockIcon, Infinity as InfinityIcon } from "lucide-react";
@@ -175,7 +175,8 @@ function LimitBar({ label, pct, reset, mode = LIMIT_DISPLAY_MODES.USED, pacePerc
       <div className="tt-limit-track">
         <div
           className={`${barColor(displayPct, mode)} tt-limit-fill rounded-full h-full transition-[width] duration-500 ease-out`}
-          style={{ width: `${widthPct}%`, minWidth: displayPct > 0 ? "3px" : 0 }}
+          data-quota-state={rawUsed >= 90 ? "danger" : rawUsed >= 70 ? "warning" : "safe"}
+          style={{ width: `${widthPct}%`, minWidth: displayPct > 0 ? "3px" : 0, "--tt-gradient-size": `${widthPct > 0 ? 10000 / widthPct : 100}%` }}
         />
         {paceX != null && (
           <>
@@ -1264,7 +1265,9 @@ export function UsageLimitsPanel({ claude, codex, cursor, gemini, kimi, kiro, gr
           ref={containerRef}
           className="flex flex-col gap-3"
           data-bar-style={barAppearance.style}
-          style={{ "--tt-bar-height": `${barAppearance.height}px`, ...(labelWidth > 0 ? { "--tt-limits-label-w": `${labelWidth}px` } : {}) }}
+          data-bar-colors={barAppearance.colorMode}
+          data-bar-direction={effectiveMode}
+          style={{ ...barAppearanceVariables(barAppearance), ...(labelWidth > 0 ? { "--tt-limits-label-w": `${labelWidth}px` } : {}) }}
         >
           <h3 className="text-sm font-medium text-oai-gray-500 dark:text-oai-gray-300 uppercase tracking-wide">
             {copy("limits.panel.title")}{copy("limits.panel.mode_separator")}{modeLabel}

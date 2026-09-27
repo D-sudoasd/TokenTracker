@@ -663,5 +663,20 @@
   "limits.appearance.gilded": "鎏金",
   "limits.appearance.arcane": "奧術",
   "limits.appearance.frost": "冰霜",
-  "limits.appearance.ember": "熔火"
+  "limits.appearance.ember": "熔火",
+  "limits.appearance.nature": "自然",
+  "limits.appearance.shadow": "暗影",
+  "limits.appearance.storm": "雷霆",
+  "limits.appearance.blood": "鮮血",
+  "limits.appearance.runic": "符文",
+  "limits.appearance.dragon": "龍鱗",
+  "limits.appearance.colorMode": "配色方式",
+  "limits.appearance.solid": "狀態純色",
+  "limits.appearance.status-gradient": "狀態雙色漸層",
+  "limits.appearance.spectrum": "連續三色漸層",
+  "limits.appearance.safe": "已用 <70%",
+  "limits.appearance.warning": "已用 70–90%",
+  "limits.appearance.danger": "已用 ≥90%",
+  "limits.appearance.endColor": "漸層終點",
+  "limits.appearance.colorHint": "顏色依已用額度判斷。連續漸層以完整的 0–100% 為尺度，剩餘模式反向顯示。"
 }
