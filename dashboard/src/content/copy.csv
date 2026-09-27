@@ -1665,3 +1665,7 @@ limits.appearance.segmented,limits,*,LimitBarAppearance,segmented,Segmented,,act
 limits.appearance.height,limits,*,LimitBarAppearance,height,Bar height,,active
 limits.appearance.pixels,limits,*,LimitBarAppearance,pixels,{{value}} px,,active
 limits.appearance.reset,limits,*,LimitBarAppearance,reset,Restore defaults,,active
+limits.appearance.gilded,limits,*,LimitBarAppearance,gilded,Gilded,,active
+limits.appearance.arcane,limits,*,LimitBarAppearance,arcane,Arcane,,active
+limits.appearance.frost,limits,*,LimitBarAppearance,frost,Frost,,active
+limits.appearance.ember,limits,*,LimitBarAppearance,ember,Ember,,active

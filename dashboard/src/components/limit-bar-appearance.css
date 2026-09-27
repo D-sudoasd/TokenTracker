@@ -40,6 +40,93 @@
   background: repeating-linear-gradient(90deg, transparent 0, transparent 14px, #15151b80 14px, #15151b80 16px);
 }
 .tt-limit-track > .tt-pace-marker { z-index: 2; }
+
+/* Fantasy frames are overlays: they never inset or rescale the quota fill. */
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) {
+  --tt-frame-light: #ffe7a3;
+  --tt-frame-mid: #987243;
+  --tt-frame-dark: #382514;
+  --tt-aura: #dca94b;
+  --tt-endcap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='40' viewBox='0 0 16 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='.8' y2='1'%3E%3Cstop stop-color='%23fff2b6'/%3E%3Cstop offset='.3' stop-color='%23bd9458'/%3E%3Cstop offset='.55' stop-color='%23503920'/%3E%3Cstop offset='.8' stop-color='%23cba367'/%3E%3Cstop offset='1' stop-color='%23503920'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M8 1 14 7 11 14 15 20 11 26 14 33 8 39 2 33 5 26 1 20 5 14 2 7Z' fill='url(%23g)' stroke='%23221910'/%3E%3Cpath d='m8 5 3 3-3 7-3-7Zm0 20 3 7-3 3-3-3Z' fill='none' stroke='%23f6d89a' stroke-width='.6'/%3E%3Cpath d='m8 15 4 5-4 5-4-5Z' fill='%23282321' stroke='%23f8dea1'/%3E%3Cpath d='m8 17 2 3-2 3-2-3Z' fill='%23e2bf79'/%3E%3C/svg%3E");
+}
+[data-bar-style="arcane"] { --tt-frame-light: #e6d7ff; --tt-frame-mid: #8b70c1; --tt-frame-dark: #30204c; --tt-aura: #ac7dff; }
+[data-bar-style="frost"] { --tt-frame-light: #e4fcff; --tt-frame-mid: #78b7cf; --tt-frame-dark: #213e59; --tt-aura: #8ddfff; }
+[data-bar-style="ember"] { --tt-frame-light: #ffd49c; --tt-frame-mid: #a26b45; --tt-frame-dark: #38231c; --tt-aura: #ff7438; }
+.tt-bar-swatch { padding: 10px 8px; }
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-track {
+  overflow: visible;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #080a10, #22242d 48%, #101218);
+  box-shadow: 0 0 0 1px #090b10, 0 0 0 3px var(--tt-frame-mid), 0 0 0 4px var(--tt-frame-dark), 0 2px 8px #0005;
+  margin-block: 5px;
+}
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-track::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+  inset: -3px;
+  border-radius: 6px;
+  border-top: 1px solid var(--tt-frame-light);
+  border-bottom: 1px solid var(--tt-frame-dark);
+  box-shadow: inset 0 1px 0 #ffffff25, inset 0 -1px 0 #0009;
+}
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-track::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  inset: -6px -3px;
+  background: var(--tt-endcap) left center / 10px 100% no-repeat, var(--tt-endcap) right center / 10px 100% no-repeat;
+}
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-fill {
+  border-radius: 3px;
+  /* Inset highlights and texture leave the status background color intact. */
+  background-image: linear-gradient(180deg, #fff7, #fff1 27%, #0002 52%, #0006 85%, #fff2);
+  box-shadow: inset 0 1px 0 #ffffff90, inset 0 -1px 0 #0009;
+}
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: repeating-linear-gradient(115deg, transparent 0 8px, #fff1 9px, transparent 10px 19px), linear-gradient(0deg, transparent 44%, #ffffff40 48%, transparent 55%);
+}
+:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"]) .tt-limit-fill::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: min(100%, 3px);
+  border-radius: 50%;
+  background: #fffbe9;
+  box-shadow: 0 0 5px 1px var(--tt-aura), 0 0 12px var(--tt-aura);
+}
+/* No illuminated endpoint for an empty bar. */
+.tt-limit-fill[style*="width: 0%"]::after { display: none; }
+[data-bar-style="arcane"] .tt-limit-track {
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px #211931, 0 0 0 3px #725698, 0 0 0 4px #271934, 0 0 12px #ac7dff30;
+}
+[data-bar-style="arcane"] .tt-limit-fill { border-radius: 999px; }
+[data-bar-style="arcane"] .tt-limit-track::before { border-radius: 999px; }
+[data-bar-style="arcane"] .tt-limit-track::after { filter: hue-rotate(210deg) saturate(.65) brightness(1.3); }
+[data-bar-style="arcane"] .tt-limit-fill::before {
+  background: radial-gradient(ellipse at 30% 80%, #ffffff60, transparent 45%), repeating-linear-gradient(135deg, transparent 0 14px, #ffffff30 15px, transparent 17px 29px), repeating-linear-gradient(45deg, transparent 0 14px, #0002 15px, transparent 17px 29px);
+}
+[data-bar-style="frost"] .tt-limit-fill::before {
+  background: repeating-conic-gradient(from 35deg at 50% 30%, #fff3 0deg 28deg, transparent 30deg 70deg, #0002 72deg 100deg, transparent 102deg 180deg) 0 0 / 42px 100%;
+}
+[data-bar-style="frost"] .tt-limit-track::after { filter: saturate(.2) brightness(1.6) drop-shadow(0 0 3px #b8ecff90); }
+[data-bar-style="ember"] .tt-limit-track::after { filter: sepia(.4) saturate(1.5); }
+[data-bar-style="ember"] .tt-limit-fill::before {
+  background: radial-gradient(ellipse at 12% 60%, #fff8 0 1px, transparent 2px) 0 0 / 23px 11px, repeating-radial-gradient(ellipse at 50% 120%, transparent 0 5px, #0003 7px, transparent 9px 14px);
+}
+[data-bar-style="ember"] .tt-limit-track { box-shadow: 0 0 0 1px #180e09, 0 0 0 3px #76513d, 0 0 0 4px #2b211c, 0 2px 10px #ff74282b; }
+
 @media (prefers-reduced-motion: reduce) {
   .tt-limit-track > div { transition: none !important; }
 }

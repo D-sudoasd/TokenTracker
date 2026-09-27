@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-export const BAR_STYLES = ["classic", "gradient", "glass", "metal", "neon", "segmented"];
+export const BAR_STYLES = ["gilded", "arcane", "frost", "ember", "classic", "gradient", "glass", "metal", "neon", "segmented"];
 const KEY = "tt.limits.barAppearance";
 const EVENT = "tt:bar-appearance";
 const DEFAULTS = { style: "classic", height: 12 };
