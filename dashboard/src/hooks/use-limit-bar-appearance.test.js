@@ -24,6 +24,32 @@ it("keeps rapid successive changes rather than reading a stale render", () => {
   expect(hook.result.current).toMatchObject({ style: "storm", colorMode: "spectrum" });
 });
 
+it("merges individual color edits from multiple controls without discarding other colors", () => {
+  const first = renderHook(useLimitBarAppearance);
+  const second = renderHook(useLimitBarAppearance);
+  act(() => {
+    first.result.current.update({ palette: { safe: DEFAULT_PALETTE.danger } });
+    second.result.current.update({ palette: { warning: DEFAULT_PALETTE.safe } });
+  });
+  expect(first.result.current.palette).toMatchObject({
+    safe: DEFAULT_PALETTE.danger,
+    warning: DEFAULT_PALETTE.safe,
+  });
+});
+
+it("does not overwrite a newer cross-tab selection with a delayed Windows snapshot", () => {
+  isNativeWindowsApp.mockReturnValue(true);
+  const hook = renderHook(useLimitBarAppearance);
+  act(() => {
+    window.localStorage.setItem("tt.limits.barAppearance", JSON.stringify({ style: "frost" }));
+    window.dispatchEvent(new StorageEvent("storage", { key: "tt.limits.barAppearance" }));
+    window.dispatchEvent(new CustomEvent("native:settings", { detail: {
+      limitBarAppearance: JSON.stringify({ style: "classic" }),
+    } }));
+  });
+  expect(hook.result.current.style).toBe("frost");
+});
+
 it("restores Windows settings on a new origin and ignores late snapshots after editing", () => {
   isNativeWindowsApp.mockReturnValue(true);
   const panel = renderHook(useLimitBarAppearance);

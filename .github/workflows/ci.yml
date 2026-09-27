@@ -56,7 +56,13 @@ jobs:
         run: npm --prefix dashboard test -- src/pages/SkillsPage.test.jsx
 
       - name: Test dashboard limits preferences
-        run: npm --prefix dashboard test -- src/hooks/use-limits-display-prefs.test.js
+        run: >-
+          npm --prefix dashboard test --
+          src/hooks/use-limits-display-prefs.test.js
+          src/hooks/use-limit-bar-appearance.test.js
+          src/components/LimitBarAppearance.test.jsx
+          src/ui/dashboard/components/UsageLimitsPanel.test.jsx
+          src/pages/SettingsPage.test.jsx
 
       # The bot character's renderer and its cross-host contracts live on the dashboard
       # side, so npm test alone does not cover them; test/bot-parity.test.js only pins

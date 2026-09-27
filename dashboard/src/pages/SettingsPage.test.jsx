@@ -20,6 +20,7 @@ const proxySettingsMock = vi.hoisted(() => ({
 }));
 
 const LABELS = {
+  "limits.appearance.title": "Progress bar appearance",
   "settings.page.title": "Settings",
   "settings.page.subtitle": "Manage your preferences",
   "settings.nav.group.personal": "Personal",
@@ -49,7 +50,8 @@ vi.mock("../lib/copy", () => ({
   copy: (key) => LABELS[key] || key,
 }));
 
-vi.mock("../lib/native-bridge", () => ({
+vi.mock("../lib/native-bridge", async (importOriginal) => ({
+  ...await importOriginal(),
   isNativeApp: () => true,
   isNativeWindowsApp: () => nativeSettingsMock.windows,
   isBridgeAvailable: () => nativeSettingsMock.available,
@@ -260,7 +262,9 @@ describe("SettingsPage category navigation", () => {
   it("groups display mode and reset feedback above the provider list", () => {
     renderSettings("/settings?section=limits");
 
-    const [settingsCard, providersCard] = screen.getAllByTestId("section-card");
+    const [appearanceCard, settingsCard, providersCard] = screen.getAllByTestId("section-card");
+    expect(appearanceCard.dataset.sectionCardTitle).toBe("Progress bar appearance");
+    expect(within(appearanceCard).getByRole("slider")).toBeInTheDocument();
     expect(settingsCard.dataset.sectionCardTitle).toBe("Usage & Limits");
     expect(within(settingsCard).getByTestId("limits-mode")).toBeInTheDocument();
     expect(within(settingsCard).getByRole("switch", { name: "Toast on limits reset" })).toBeInTheDocument();

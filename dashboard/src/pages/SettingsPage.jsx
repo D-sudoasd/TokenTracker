@@ -128,7 +128,7 @@ export function SettingsPage() {
       Icon: Gauge,
       content: (
         <div className="space-y-4">
-          <SectionCard title={copy("limits.appearance.title")}><LimitBarAppearance /></SectionCard>
+          <SectionCard title={copy("limits.appearance.title")}><LimitBarAppearance showHeading={false} /></SectionCard>
           <SectionCard title={copy("settings.section.limits")}>
             <SettingsRow
               label={copy("limits.settings.display_mode_label")}
