@@ -589,5 +589,16 @@
   "subscriptions.form.provider": "关联工具",
   "subscriptions.form.provider_required": "请选择关联的工具",
   "subscriptions.form.provider_taken": "该工具已有订阅，请编辑现有记录",
-  "subscriptions.form.provider_taken_suffix": "（已有订阅）"
+  "subscriptions.form.provider_taken_suffix": "（已有订阅）",
+  "limits.appearance.title": "进度条外观",
+  "limits.appearance.hint": "选择材质与高度，应用于本设备仪表盘中的限额进度条。",
+  "limits.appearance.classic": "经典",
+  "limits.appearance.gradient": "柔和渐变",
+  "limits.appearance.glass": "玻璃",
+  "limits.appearance.metal": "金属",
+  "limits.appearance.neon": "霓虹",
+  "limits.appearance.segmented": "分段",
+  "limits.appearance.height": "进度条高度",
+  "limits.appearance.pixels": "{{value}} 像素",
+  "limits.appearance.reset": "恢复默认"
 }

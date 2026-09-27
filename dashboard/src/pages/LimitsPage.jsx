@@ -1,7 +1,8 @@
+import { LimitBarAppearance } from "../components/LimitBarAppearance.jsx";
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion, useReducedMotion } from "motion/react";
-import { Bell, BellOff, CalendarClock, Settings as SettingsIcon } from "lucide-react";
+import { Bell, BellOff, CalendarClock, Palette, Settings as SettingsIcon } from "lucide-react";
 import { Popover } from "@base-ui/react/popover";
 import { useUsageLimits } from "../hooks/use-usage-limits";
 import { useLimitsDisplayPrefs } from "../hooks/use-limits-display-prefs.js";
@@ -138,6 +139,18 @@ export function LimitsPage() {
             </div>
             <div className="flex items-center gap-2 shrink-0">
               {alerts.enabled && alerts.permissionBlocked ? <NotificationBlockedBubble /> : null}
+              <Popover.Root>
+                <Popover.Trigger aria-label={copy("limits.appearance.title")} title={copy("limits.appearance.title")} className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-oai-gray-200 dark:border-oai-gray-800 hover:bg-oai-gray-100 dark:hover:bg-oai-gray-800 focus-visible:ring-2 focus-visible:ring-oai-brand-500">
+                  <Palette className="h-4 w-4" aria-hidden />
+                </Popover.Trigger>
+                <Popover.Portal>
+                  <Popover.Positioner side="bottom" align="end" sideOffset={8} className="z-50">
+                    <Popover.Popup aria-label={copy("limits.appearance.title")} className="w-[min(420px,calc(100vw-24px))] max-h-[80vh] overflow-y-auto rounded-2xl border border-oai-gray-200 dark:border-oai-gray-700 bg-white dark:bg-oai-gray-900 text-oai-black dark:text-white p-5 shadow-xl">
+                      <LimitBarAppearance />
+                    </Popover.Popup>
+                  </Popover.Positioner>
+                </Popover.Portal>
+              </Popover.Root>
               <Popover.Root open={subscriptionsOpen} onOpenChange={setSubscriptionsOpen}>
                 <Popover.Trigger
                   aria-label={copy("limits.page.openSubscriptions")}
