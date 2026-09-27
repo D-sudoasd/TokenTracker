@@ -28,6 +28,11 @@ internal static class Program
                 var ok = SingleInstance.TryForwardToPrimary(deepLink);
                 Diag.Log("program", $"forwarded deepLink to primary: {ok}");
             }
+            else if (!launchedAtStartup)
+            {
+                var ok = SingleInstance.TryForwardToPrimary(SingleInstance.ShowDashboardMessage);
+                Diag.Log("program", $"forwarded show-dashboard to primary: {ok}");
+            }
             return;
         }
 
@@ -73,7 +78,7 @@ internal static class Program
         // Show the desktop pet on a normal launch (manual run or post-install), but stay
         // quietly in the tray when Windows auto-starts us at login or when we were only
         // spun up to relay an OAuth deep link (the pet then restores only if it was open
-        // last exit). The dashboard no longer auto-opens — the pet is the visible presence.
+        // last exit). Manual launches also open the dashboard below.
         var showPetOnLaunch = deepLink is null && !launchedAtStartup;
         var ctx = new TrayApplicationContext(showPetOnLaunch);
         trayContext = ctx;
@@ -84,6 +89,7 @@ internal static class Program
 
         // Cold start via a deep link (app wasn't already running): handle it once ready.
         if (deepLink is not null) ctx.HandleDeepLink(deepLink);
+        else if (!launchedAtStartup) ctx.ActivateDashboard();
 
         Application.Run(ctx);
 
