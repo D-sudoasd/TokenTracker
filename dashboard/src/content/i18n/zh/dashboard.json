@@ -600,5 +600,9 @@
   "limits.appearance.segmented": "分段",
   "limits.appearance.height": "进度条高度",
   "limits.appearance.pixels": "{{value}} 像素",
-  "limits.appearance.reset": "恢复默认"
+  "limits.appearance.reset": "恢复默认",
+  "limits.appearance.gilded": "鎏金",
+  "limits.appearance.arcane": "奥术",
+  "limits.appearance.frost": "冰霜",
+  "limits.appearance.ember": "熔火"
 }

@@ -145,7 +145,7 @@ export function LimitsPage() {
                 </Popover.Trigger>
                 <Popover.Portal>
                   <Popover.Positioner side="bottom" align="end" sideOffset={8} className="z-50">
-                    <Popover.Popup aria-label={copy("limits.appearance.title")} className="w-[min(420px,calc(100vw-24px))] max-h-[80vh] overflow-y-auto rounded-2xl border border-oai-gray-200 dark:border-oai-gray-700 bg-white dark:bg-oai-gray-900 text-oai-black dark:text-white p-5 shadow-xl">
+                    <Popover.Popup aria-label={copy("limits.appearance.title")} className="w-[min(520px,calc(100vw-24px))] max-h-[80vh] overflow-y-auto rounded-2xl border border-oai-gray-200 dark:border-oai-gray-700 bg-white dark:bg-oai-gray-900 text-oai-black dark:text-white p-5 shadow-xl">
                       <LimitBarAppearance />
                     </Popover.Popup>
                   </Popover.Positioner>
