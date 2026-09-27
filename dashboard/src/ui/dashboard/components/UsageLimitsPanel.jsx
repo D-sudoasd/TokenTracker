@@ -1,4 +1,4 @@
-import { useLimitBarAppearance, barAppearanceVariables } from "../../../hooks/use-limit-bar-appearance.js";
+import { useLimitBarAppearance, barAppearanceVariables, barAppearanceAttributes } from "../../../hooks/use-limit-bar-appearance.js";
 import "../../../components/limit-bar-appearance.css";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Clock as ClockIcon, Infinity as InfinityIcon } from "lucide-react";
@@ -1245,8 +1245,7 @@ export function UsageLimitsPanel({ claude, codex, cursor, gemini, kimi, kiro, gr
         <div
           ref={containerRef}
           className="flex flex-col gap-3"
-          data-bar-style={barAppearance.style}
-          data-bar-colors={barAppearance.colorMode}
+          {...barAppearanceAttributes(barAppearance)}
           data-bar-direction={effectiveMode}
           style={{ ...barAppearanceVariables(barAppearance), ...(labelWidth > 0 ? { "--tt-limits-label-w": `${labelWidth}px` } : {}) }}
         >

@@ -2,7 +2,15 @@ import DEFAULT_PALETTE from "../content/limit-bar-palette.json";
 import { isNativeWindowsApp, onNativeSettings, requestNativeSettings, setNativeSetting } from "../lib/native-bridge.js";
 import { useCallback, useEffect, useState, useRef } from "react";
 
-export const BAR_STYLES = ["nature", "shadow", "storm", "blood", "runic", "dragon", "gilded", "arcane", "frost", "ember", "classic", "gradient", "glass", "metal", "neon", "segmented"];
+const FRAMED_STYLES = ["nature", "shadow", "storm", "blood", "runic", "dragon", "gilded", "arcane", "frost", "ember"];
+export const BAR_STYLES = [...FRAMED_STYLES, "classic", "gradient", "glass", "metal", "neon", "segmented"];
+export function barAppearanceAttributes(prefs) {
+  return {
+    "data-bar-style": prefs.style,
+    "data-bar-frame": FRAMED_STYLES.includes(prefs.style) ? "ornate" : undefined,
+    "data-bar-colors": prefs.colorMode,
+  };
+}
 const KEY = "tt.limits.barAppearance";
 const EVENT = "tt:bar-appearance";
 export { DEFAULT_PALETTE };
@@ -33,9 +41,17 @@ export function useLimitBarAppearance() {
   const editedRef = useRef(false);
   const hydratedRef = useRef(false);
   useEffect(() => {
-    const onChange = (event) => { if (!event.detail?.fromNative) editedRef.current = true; currentRef.current = normalizeBarAppearance(event.detail); setAppearance(currentRef.current); };
+    const onChange = (event) => {
+      if (!event.detail?.fromNative) editedRef.current = true;
+      currentRef.current = normalizeBarAppearance(event.detail);
+      setAppearance(currentRef.current);
+    };
     const onStorage = (event) => {
-      if (event.key === KEY || event.key === null) { currentRef.current = readAppearance(); setAppearance(currentRef.current); }
+      if (event.key === KEY || event.key === null) {
+        editedRef.current = true;
+        currentRef.current = readAppearance();
+        setAppearance(currentRef.current);
+      }
     };
     const offNative = isNativeWindowsApp() ? onNativeSettings((settings) => {
       if (editedRef.current || hydratedRef.current || typeof settings.limitBarAppearance !== "string") return;
@@ -57,7 +73,11 @@ export function useLimitBarAppearance() {
   }, []);
   const update = useCallback((patch) => {
     editedRef.current = true;
-    const next = normalizeBarAppearance({ ...currentRef.current, ...patch });
+    const next = normalizeBarAppearance({
+      ...currentRef.current,
+      ...patch,
+      palette: { ...currentRef.current.palette, ...patch.palette },
+    });
     currentRef.current = next;
     try { window.localStorage.setItem(KEY, JSON.stringify(next)); } catch { /* Session-only when storage is unavailable. */ }
     window.dispatchEvent(new CustomEvent(EVENT, { detail: next }));

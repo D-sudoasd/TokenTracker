@@ -39,10 +39,10 @@
   pointer-events: none;
   background: repeating-linear-gradient(90deg, transparent 0, transparent 14px, #15151b80 14px, #15151b80 16px);
 }
-.tt-limit-track > .tt-pace-marker { z-index: 2; }
+.tt-limit-track > .tt-pace-marker { z-index: 4; }
 
 /* Fantasy frames are overlays: they never inset or rescale the quota fill. */
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) {
+[data-bar-frame="ornate"] {
   --tt-frame-light: #ffe7a3;
   --tt-frame-mid: #987243;
   --tt-frame-dark: #382514;
@@ -53,14 +53,14 @@
 [data-bar-style="frost"] { --tt-frame-light: #e4fcff; --tt-frame-mid: #78b7cf; --tt-frame-dark: #213e59; --tt-aura: #8ddfff; }
 [data-bar-style="ember"] { --tt-frame-light: #ffd49c; --tt-frame-mid: #a26b45; --tt-frame-dark: #38231c; --tt-aura: #ff7438; }
 .tt-bar-swatch { padding: 10px 8px; }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-track {
+[data-bar-frame="ornate"] .tt-limit-track {
   overflow: visible;
   border-radius: 4px;
   background: linear-gradient(180deg, #080a10, #22242d 48%, #101218);
   box-shadow: 0 0 0 1px #090b10, 0 0 0 3px var(--tt-frame-mid), 0 0 0 4px var(--tt-frame-dark), 0 2px 8px #0005;
   margin-block: 5px;
 }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-track::before {
+[data-bar-frame="ornate"] .tt-limit-track::before {
   content: "";
   pointer-events: none;
   position: absolute;
@@ -71,21 +71,21 @@
   border-bottom: 1px solid var(--tt-frame-dark);
   box-shadow: inset 0 1px 0 #ffffff25, inset 0 -1px 0 #0009;
 }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-track::after {
+[data-bar-frame="ornate"] .tt-limit-track::after {
   content: "";
   position: absolute;
   z-index: 3;
   pointer-events: none;
-  inset: -6px -3px;
-  background: var(--tt-endcap) left center / 10px 100% no-repeat, var(--tt-endcap) right center / 10px 100% no-repeat;
+  inset: -6px;
+  background: var(--tt-endcap) left center / 6px 100% no-repeat, var(--tt-endcap) right center / 6px 100% no-repeat;
 }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-fill {
+[data-bar-frame="ornate"] .tt-limit-fill {
   border-radius: 3px;
   /* Inset highlights and texture leave the status background color intact. */
   --tt-texture: linear-gradient(180deg, #fff7, #fff1 27%, #0002 52%, #0006 85%, #fff2);
   box-shadow: inset 0 1px 0 #ffffff90, inset 0 -1px 0 #0009;
 }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-fill::before {
+[data-bar-frame="ornate"] .tt-limit-fill::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -93,7 +93,7 @@
   pointer-events: none;
   background: repeating-linear-gradient(115deg, transparent 0 8px, #fff1 9px, transparent 10px 19px), linear-gradient(0deg, transparent 44%, #ffffff40 48%, transparent 55%);
 }
-:is([data-bar-style="gilded"], [data-bar-style="arcane"], [data-bar-style="frost"], [data-bar-style="ember"], [data-bar-style="nature"], [data-bar-style="shadow"], [data-bar-style="storm"], [data-bar-style="blood"], [data-bar-style="runic"], [data-bar-style="dragon"]) .tt-limit-fill::after {
+[data-bar-frame="ornate"] .tt-limit-fill::after {
   content: "";
   position: absolute;
   pointer-events: none;
