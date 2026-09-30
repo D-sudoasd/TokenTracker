@@ -1684,3 +1684,23 @@ limits.appearance.warning,limits,*,LimitBarAppearance,warning,Used 70–90%,,act
 limits.appearance.danger,limits,*,LimitBarAppearance,danger,Used ≥90%,,active
 limits.appearance.endColor,limits,*,LimitBarAppearance,endColor,Gradient end,,active
 limits.appearance.colorHint,limits,*,LimitBarAppearance,colorHint,Colors follow used quota. Continuous gradients use the full 0–100% scale; remaining mode reverses it.,,active
+
+quota.title,ui,QuotaWidget,QuotaWidget,title,"Limits",,active
+quota.remaining,ui,QuotaWidget,QuotaWidget,remaining,"Remaining",,active
+quota.stale,ui,QuotaWidget,QuotaWidget,stale,"Update delayed",,active
+quota.drag,ui,QuotaWidget,QuotaWidget,drag,"Drag to move",,active
+quota.choose,ui,QuotaWidget,QuotaWidget,choose,"Choose limits",,active
+quota.collapse,ui,QuotaWidget,QuotaWidget,collapse,"Collapse",,active
+quota.expand,ui,QuotaWidget,QuotaWidget,expand,"Expand limits",,active
+quota.empty,ui,QuotaWidget,QuotaWidget,empty,"Connect a provider in the dashboard",,active
+quota.loading,ui,QuotaWidget,QuotaWidget,loading,"Loading limits…",,active
+quota.awaiting,ui,QuotaWidget,QuotaWidget,awaiting,"Waiting for updated limits",,active
+quota.resets,ui,QuotaWidget,QuotaWidget,resets,"Resets {{time}}",,active
+quota.no_reset,ui,QuotaWidget,QuotaWidget,no_reset,"Reset time unavailable",,active
+quota.unavailable,ui,QuotaWidget,QuotaWidget,unavailable,"Selected limits are unavailable",,active
+quota.dashboard,ui,QuotaWidget,QuotaWidget,dashboard,"Open dashboard",,active
+quota.pick_two,ui,QuotaWidget,QuotaWidget,pick_two,"Choose up to two windows",,active
+quota.percent,ui,QuotaWidget,QuotaWidget,percent,"%",,active
+quota.reset_in,ui,QuotaWidget,QuotaWidget,reset_in,"Resets in {{time}}",,active
+quota.close,ui,QuotaWidget,QuotaWidget,close,"Close widget",,active
+quota.close_hint,ui,QuotaWidget,QuotaWidget,close_hint,"Close widget; reopen from the tray menu",,active
