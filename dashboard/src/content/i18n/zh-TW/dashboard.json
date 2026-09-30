@@ -679,6 +679,7 @@
   "limits.appearance.danger": "已用 ≥90%",
   "limits.appearance.endColor": "漸層終點",
   "limits.appearance.colorHint": "顏色依已用額度判斷。連續漸層以完整的 0–100% 為尺度，剩餘模式反向顯示。",
+  "quota.percent": "%",
   "quota.title": "限額",
   "quota.remaining": "剩餘",
   "quota.stale": "資料未更新",

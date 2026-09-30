@@ -620,6 +620,7 @@
   "limits.appearance.danger": "已用 ≥90%",
   "limits.appearance.endColor": "渐变终点",
   "limits.appearance.colorHint": "颜色按已用额度判断。连续渐变以完整的 0–100% 为尺度，剩余模式反向显示。",
+  "quota.percent": "%",
   "quota.title": "限额",
   "quota.remaining": "剩余",
   "quota.stale": "数据未更新",
