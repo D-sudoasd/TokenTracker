@@ -10,6 +10,16 @@ public sealed class ChildProcessProxyTests
     public void AcceptsProcessStartInfoChildEnvironment()
     {
         var startInfo = new ProcessStartInfo { UseShellExecute = false };
+        // This case exercises Windows proxy discovery, independent of the
+        // machine's inherited explicit proxy configuration.
+        foreach (var key in startInfo.Environment.Keys
+            .Where(key => key.Equals("HTTP_PROXY", StringComparison.OrdinalIgnoreCase)
+                || key.Equals("HTTPS_PROXY", StringComparison.OrdinalIgnoreCase)
+                || key.Equals("ALL_PROXY", StringComparison.OrdinalIgnoreCase))
+            .ToArray())
+        {
+            startInfo.Environment.Remove(key);
+        }
         var proxy = new StubProxy(_ => new Uri("http://127.0.0.1:7897"));
 
         var source = ChildProcessProxy.Configure(startInfo.Environment, proxy);
